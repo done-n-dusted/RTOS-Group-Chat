@@ -24,6 +24,8 @@ int socket_fd = 0;
 pthread_t client_threads[MAX_PEOPLE];
 pthread_mutex_t registration_lock;
 
+message failed;
+
 void close_it(int num){
     //kill threads
     for(int i = 0; i < MAX_PEOPLE; i++){
@@ -60,9 +62,38 @@ void *client_handler(void *socket_fd){
 
     message M;
     while(recv(client_fd, &M, sizeof(M), 0)){
-        for(int i = 0; i < MAX_PEOPLE; i++){
-            send(people_sock[i], &M, sizeof(M), 0);
+        if(M.type == 'G'){
+            for(int i = 0; i < MAX_PEOPLE; i++){
+                if(strcmp(people[i], M.snd) != 0){
+                    send(people_sock[i], &M, sizeof(M), 0);
+                }
+            }
         }
+
+        else{
+            // int lol = 0;
+            int from_fd;
+            for(int i = 0; i < people_count; i++){
+                if(strcmp(people[i], M.rcv) == 0){
+                    send(people_sock[i], &M, sizeof(M), 0);
+                    // lol = 1;
+                }
+
+                if(strcmp(people[i], M.snd) == 0){
+                    from_fd = people_sock[i];
+                }
+            }
+
+            // if(!lol){
+            //     strcpy(failed.msg, "No User found\n");
+            //     send(from_fd, &failed.msg, sizeof(failed), 0);
+            //     printf("No user online with name: %s\n", M.rcv);
+            // }
+
+        }
+
+
+
     }
 
     printf("%s left the group\n", temp_name);

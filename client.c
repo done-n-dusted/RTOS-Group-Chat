@@ -25,6 +25,7 @@ void *rcv_message(){
 
         msg_res = recv(socket_fd, &m, sizeof(m), 0);
         printf("%s : %s\n", m.snd, m.msg);
+        fflush(stdout);
     }
 }
 
@@ -77,8 +78,29 @@ int main(int argc, char const *argv[]) {
     pthread_create(&rd, NULL, rcv_message, NULL);
 
     for(;;){
-        printf("Message: \n");
+        // char type;
+        // char to[10] = {0};
+
+        printf("Message: ");
         scanf("%[^\n]%*c", M.msg);
+        // fgets(M.msg, sizeof(M.msg), stdin);
+
+        printf("Type D (or) G : ");
+        scanf("%c", M.type);
+
+        // M.type = type;
+
+        // printf("yo wtf %c\n", M.type);
+        if(M.type == 'D'){
+            printf("TO: ");
+            // fgets(to, sizeof(to), stdin);
+            // printf("TOw: \n");
+            scanf(" %[^\n]%*c", M.rcv);
+            // printf("to = %s\n", to);
+            // to[strcspn(to, "\n")] = 0;
+            // strcpy(M.rcv, to);
+            // printf("##%c %s %s %s\n", M.type, M.snd, M.rcv, M.msg);
+        }
 
         send(socket_fd, &M, sizeof(M), 0);
     }
