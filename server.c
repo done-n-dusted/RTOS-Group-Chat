@@ -108,9 +108,11 @@ int main(int argc, char const *argv[]) {
         printf("Socket couldn't be created\n");
         return -1;
     }
+    signal(SIGINT, close_it);
 
-    int opt = 1;
-    setsockopt(socket_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt));
+    //
+    // int opt = 1;
+    // setsockopt(socket_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt));
 
     serv.sin_family = AF_INET;
     serv.sin_addr.s_addr = INADDR_ANY;
@@ -130,9 +132,11 @@ int main(int argc, char const *argv[]) {
         return -1;
     }
 
+    leng = sizeof(clt);
+
     for(;;){
         int *connection_fd = malloc(sizeof(int));
-        *connection_fd = accept(socket_fd, (struct sockaddr*)&clt, sizeof(clt));
+        *connection_fd = accept(socket_fd, (struct sockaddr*)&clt, &leng);
 
         printf("count: %d\n", people_count + 1);
 

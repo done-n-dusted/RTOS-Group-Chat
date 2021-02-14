@@ -24,7 +24,7 @@ void *rcv_message(){
         message m;
 
         msg_res = recv(socket_fd, &m, sizeof(m), 0);
-        printf("%s : %s\n", m.snd, m.rcv);
+        printf("%s : %s\n", m.snd, m.msg);
     }
 }
 
@@ -39,6 +39,7 @@ int main(int argc, char const *argv[]) {
     struct sockaddr_in server_addr;
 
     char name[10];
+    printf("Enter name: \n");
     scanf("%[^\n]%*c", name);
     strcpy(M.snd, name);
 
