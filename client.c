@@ -24,7 +24,7 @@ void *rcv_message(){
         message m;
 
         msg_res = recv(socket_fd, &m, sizeof(m), 0);
-        printf("%s : %s\n", m.snd, m.msg);
+        printf("%c %s : %s\n", m.type, m.snd, m.msg);
         fflush(stdout);
     }
 }
@@ -82,11 +82,11 @@ int main(int argc, char const *argv[]) {
         // char to[10] = {0};
 
         printf("Message: ");
-        scanf("%[^\n]%*c", M.msg);
+        scanf(" %[^\n]%*c", M.msg);
         // fgets(M.msg, sizeof(M.msg), stdin);
 
         printf("Type D (or) G : ");
-        scanf("%c", M.type);
+        scanf("%c", &M.type);
 
         // M.type = type;
 

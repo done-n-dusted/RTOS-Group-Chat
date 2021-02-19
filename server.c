@@ -28,11 +28,11 @@ message failed;
 
 void close_it(int num){
     //kill threads
-    for(int i = 0; i < MAX_PEOPLE; i++){
+    for(int i = 0; i < people_count; i++){
         pthread_kill(client_threads[i], SIGKILL);
     }
     //kill sockets
-    for(int i = 0; i < MAX_PEOPLE; i++){
+    for(int i = 0; i < people_count; i++){
         close(people_sock[i]);
     }
     //close server socket
