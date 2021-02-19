@@ -24,7 +24,7 @@ void *rcv_message(){
         message m;
 
         msg_res = recv(socket_fd, &m, sizeof(m), 0);
-        printf("%c %s : %s\n", m.type, m.snd, m.msg);
+        printf("\n%c %s : %s\n", m.type, m.snd, m.msg);
         fflush(stdout);
     }
 }
@@ -55,7 +55,7 @@ int main(int argc, char const *argv[]) {
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(PORT);
 
-    inet_res = inet_pton(AF_INET, "127.0.0.1", &server_addr.sin_addr);
+    inet_res = inet_pton(AF_INET, "20.198.3.183", &server_addr.sin_addr);
 
     if(inet_res <= 0){
         printf("Invalid address. Terminated\n");
